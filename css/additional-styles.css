@@ -506,38 +506,74 @@
     transition: transform 0.5s ease;
 }
 
-.gallery-overlay {
+.gallery-item:hover img {
+    transform: scale(1.1) rotateY(5deg);
+}
+
+/* Container de título - SEMPRE VISÍVEL */
+.gallery-title-container {
     position: absolute;
     top: 0;
     left: 0;
     width: 100%;
     height: 100%;
-    background-color: rgba(139, 69, 19, 0.7);
     display: flex;
     align-items: center;
     justify-content: center;
-    opacity: 0;
-    transition: opacity 0.5s ease;
+    z-index: 10;
+    pointer-events: none; /* Para permitir clicar através dele */
 }
 
-.gallery-overlay span {
-    color: var(--white);
+/* Título - SEMPRE VISÍVEL */
+.gallery-title {
+    color: white;
     font-size: 1.2rem;
     font-weight: 500;
-    transform: translateY(20px);
-    transition: transform 0.5s ease;
+    padding: 8px 16px;
+    border-radius: 4px;
+    text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.8);
+    pointer-events: none; /* Para permitir clicar através dele */
 }
 
-.gallery-item:hover img {
-    transform: scale(1.1) rotateY(5deg);
+/* Escurecimento no hover */
+.gallery-item::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0);
+    transition: background-color 0.3s ease;
+    z-index: 5;
+    pointer-events: none;
 }
 
-.gallery-item:hover .gallery-overlay {
-    opacity: 1;
+.gallery-item:hover::before {
+    background-color: rgba(0, 0, 0, 0.3);
 }
 
-.gallery-item:hover .gallery-overlay span {
-    transform: translateY(0);
+/* Descrição - INICIALMENTE ESCONDIDA */
+.gallery-description {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    background-color: rgba(255, 255, 255, 0.9);
+    padding: 15px;
+    transform: translateY(100%); /* Começa fora da view */
+    opacity: 0; /* Começa invisível */
+    transition: opacity 0.3s ease, transform 0.3s ease;
+    z-index: 20;
+    pointer-events: none; /* Para permitir clicar através dele */
+    visibility: hidden; /* Garantir que está inicialmente oculto */
+}
+
+/* Mostra a descrição APENAS no hover */
+.gallery-item:hover .gallery-description {
+    transform: translateY(0); /* Move para a posição visível */
+    opacity: 1; /* Torna visível */
+    visibility: visible; /* Torna visível no hover */
 }
 
 .gallery-filter {
@@ -562,18 +598,6 @@
 .filter-btn:hover, .filter-btn.active {
     background-color: var(--primary-color);
     color: var(--white);
-}
-
-.gallery-description {
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    width: 100%;
-    background-color: rgba(255, 255, 255, 0.9);
-    padding: 15px;
-    transform: translateY(100%);
-    opacity: 0;
-    transition: opacity 0.3s ease, transform 0.3s ease;
 }
 
 .gallery-description h4 {

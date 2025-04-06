@@ -199,6 +199,12 @@ document.addEventListener('DOMContentLoaded', function() {
                 opacity: 1 !important;
                 transform: translateY(0) !important;
             }
+
+            /* Excluir títulos e descrições da galeria do efeito de fade */
+            .gallery-title-container, .gallery-title, .gallery-description {
+                opacity: 1 !important;
+                transform: none !important;
+            }
         </style>
     `);
 

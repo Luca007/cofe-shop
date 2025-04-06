@@ -287,17 +287,29 @@ document.addEventListener('DOMContentLoaded', function() {
 
                 // Filtra os itens da galeria
                 galleryFilterItems.forEach(item => {
+                    const galleryTitle = item.querySelector('.gallery-title');
+
                     if (filter === 'all' || item.getAttribute('data-category') === filter) {
                         item.style.display = 'block';
+                        item.style.opacity = '1';
+                        item.style.transform = 'scale(1)';
 
-                        // Adiciona animação de entrada
-                        setTimeout(() => {
-                            item.style.opacity = '1';
-                            item.style.transform = 'scale(1)';
-                        }, 50);
+                        // Garantir que o título da galeria permaneça visível durante a animação
+                        if (galleryTitle) {
+                            galleryTitle.style.opacity = '1';
+                            galleryTitle.style.visibility = 'visible';
+                            galleryTitle.style.display = 'block';
+                        }
                     } else {
                         item.style.opacity = '0';
                         item.style.transform = 'scale(0.8)';
+
+                        // Mesmo para itens que estão saindo, manter o título visível até o final da animação
+                        if (galleryTitle) {
+                            galleryTitle.style.opacity = '1';
+                            galleryTitle.style.visibility = 'visible';
+                            galleryTitle.style.display = 'block';
+                        }
 
                         // Esconde o item após a animação de saída
                         setTimeout(() => {
@@ -306,29 +318,6 @@ document.addEventListener('DOMContentLoaded', function() {
                     }
                 });
             });
-        });
-    }
-
-    // ===== Mostrar descrições da galeria ao passar o mouse =====
-    const galleryDescriptions = document.querySelectorAll('.gallery-description');
-
-    if (galleryDescriptions.length > 0) {
-        galleryItems.forEach(item => {
-            const description = item.querySelector('.gallery-description');
-
-            if (description) {
-                // Mostra a descrição ao passar o mouse
-                item.addEventListener('mouseenter', () => {
-                    description.style.opacity = '1';
-                    description.style.transform = 'translateY(0)';
-                });
-
-                // Esconde a descrição ao remover o mouse
-                item.addEventListener('mouseleave', () => {
-                    description.style.opacity = '0';
-                    description.style.transform = 'translateY(20px)';
-                });
-            }
         });
     }
 
